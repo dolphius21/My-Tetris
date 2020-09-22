@@ -11,7 +11,7 @@ body {
 .grid {
   width: 400px;
   height: 800px;
-  background-color: azure;
+  background-color: whitesmoke;
   display: flex;
   flex-wrap: wrap;
 }
@@ -19,5 +19,9 @@ body {
 .grid div {
   height: 40px;
   width: 40px;
+  border: 1px white solid;
+}
+
+.tetromino {
   background-color: coral;
 }
