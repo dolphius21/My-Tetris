@@ -10,11 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const width = 10;
 
   // The Tetrominoes
-  const lTetromino = [
+  const leftLTetromino = [
+    [width, width * 2, width * 2 + 1, width * 2 + 2],
     [1, width + 1, width * 2 + 1, 2],
     [width, width + 1, width + 2, width * 2 + 2],
     [1, width + 1, width * 2, width * 2 + 1],
-    [width, width * 2, width * 2 + 1, width * 2 + 2],
+  ];
+
+  const rightLTetromino = [
+    [width + 2, width * 2, width * 2 + 1, width * 2 + 2],
+    [1, width + 1, width * 2 + 1, width * 2 + 2],
+    [width, width + 1, width + 2, width * 2],
+    [0, 1, width + 1, width * 2 + 1],
   ];
 
   const zTetromino = [
@@ -46,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const theTetrominoes = [
-    lTetromino,
+    leftLTetromino,
+    rightLTetromino,
     zTetromino,
     tTetromino,
     oTetromino,
@@ -67,11 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Set the default current position and default rotation
   let currentPosition = 3;
-  let defaultRotation = 0;
+  let currentRotation = 0;
 
   // randomly select a Tetromino
   let random = Math.floor(Math.random() * theTetrominoes.length);
-  let current = theTetrominoes[random][defaultRotation];
+  let current = theTetrominoes[random][currentRotation];
 
   // Function => draw the Tetromino
   function draw() {
@@ -97,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.keyCode === 37) {
       moveLeft();
     } else if (e.keyCode === 38) {
-      // rotate();
+      rotate();
     } else if (e.keyCode === 39) {
       moveRight();
     } else if (e.keyCode === 40) {
@@ -129,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       // start a new tetromino falling
       random = Math.floor(Math.random() * theTetrominoes.length);
-      current = theTetrominoes[random][defaultRotation];
+      current = theTetrominoes[random][currentRotation];
       currentPosition = 3;
       draw();
     }
@@ -160,6 +168,26 @@ document.addEventListener("DOMContentLoaded", () => {
     undraw();
     if (!isAtRightEdge) currentPosition += 1;
     if (isTaken) currentPosition -= 1;
+    draw();
+  }
+
+  // Function => rotate the tetromino
+  function rotate() {
+    const isAtRightEdge = current.some(
+      (index) => (currentPosition + index) % width === width - 1
+    );
+    const isAtLeftEdge = current.some(
+      (index) => (currentPosition + index) % width === 0
+    );
+    undraw();
+    currentRotation++;
+    // to repeat the rotation of the tetromino
+    if (currentRotation === current.length) {
+      currentRotation = 0;
+    }
+    if (!isAtRightEdge) currentPosition += 1;
+    if (!isAtLeftEdge) currentPosition -= 1;
+    current = theTetrominoes[random][currentRotation];
     draw();
   }
 });

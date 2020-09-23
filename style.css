@@ -26,6 +26,7 @@ body {
   border: 0;
 }
 
-.tetromino {
+.grid .tetromino {
   background-color: coral;
+  border: 0;
 }
