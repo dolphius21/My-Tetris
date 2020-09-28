@@ -119,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function moveDown() {
     undraw();
     currentPosition += width;
+    console.log(currentPosition);
     draw();
     freeze();
   }
